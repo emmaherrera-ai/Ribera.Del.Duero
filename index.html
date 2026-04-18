@@ -1,0 +1,238 @@
+import React, { useState } from 'react';
+import { Wine, Star, Utensils, Award, ChevronRight, MapPin, X, GlassWater, FileText, ExternalLink, MessageSquare } from 'lucide-react';
+
+const App = () => {
+  const [selectedWine, setSelectedWine] = useState(null);
+
+  /** * CONFIGURACIÓN ACTUALIZADA:
+   * 1. phoneNumber: +52 55 5068 0087
+   * 2. pdfUrl: Enlace de Google Drive proporcionado.
+   */
+  const phoneNumber = "525550680087"; 
+  const pdfUrl = "https://drive.google.com/file/d/1giTlN19W4O2F0uU10DgqXUDlWNLCEBed/view?usp=sharing"; 
+
+  const wines = [
+    {
+      id: 'vendimia',
+      name: 'Viña Tuelda Vendimia',
+      label: 'Joven / Fresco',
+      capsule: '#4B2C5E',
+      tag: 'Para el diario',
+      awards: 'Vino de Altura',
+      pairing: 'Tapas, quesos y asados.',
+      highlights: 'Fruta pura y frescura vibrante.',
+      details: 'Viñedos de 20-25 años a 900m. 3 meses en barrica.'
+    },
+    {
+      id: 'roble',
+      name: 'Viña Tuelda Roble',
+      label: 'El Favorito',
+      capsule: '#2D4F8C',
+      tag: '91 Pts Tim Atkin',
+      awards: 'Mejor Calidad-Precio',
+      pairing: 'Paté, semicurados y carnes.',
+      highlights: 'Mineralidad caliza y final fresco.',
+      details: '6 meses en barrica. Elegido el mejor tinto de Ribera bajo 16€.'
+    },
+    {
+      id: 'crianza',
+      name: 'Viña Tuelda Crianza',
+      label: 'Clásico Elegante',
+      capsule: '#B22222',
+      tag: '90 Pts Atkin',
+      awards: 'Medalla de Oro Mundial',
+      pairing: 'Cortes braseados y aves.',
+      highlights: 'Vainilla, cacao y frutos negros.',
+      details: '15 meses en barrica. Estructura y taninos sedosos.'
+    },
+    {
+      id: 'vegamian',
+      name: 'Vegamian Crianza',
+      label: 'Vino de Autor',
+      capsule: '#1A1A1A',
+      tag: 'Top 30 Ribera',
+      awards: 'Armonía & Elegancia',
+      pairing: 'Carnes rojas y salsas complejas.',
+      highlights: 'Exuberancia frutal y especiados.',
+      details: 'Selección de viñedos de 25-35 años. Gran persistencia.'
+    },
+    {
+      id: 'reserva',
+      name: 'Finca La Corva',
+      label: 'Reserva Especial',
+      capsule: '#A0A0A0',
+      tag: 'Viñedo Único',
+      awards: '91 Pts Tim Atkin',
+      pairing: 'Trufa, caza y chocolate.',
+      highlights: 'Intenso, ahumado y complejo.',
+      details: '24 meses en barrica de una parcela de +35 años.'
+    },
+    {
+      id: 'casiano',
+      name: 'Casiano Gran Reserva',
+      label: 'Icono de Lujo',
+      capsule: '#800000',
+      tag: 'Edición Limitada',
+      awards: 'Solo 2,400 Botellas',
+      pairing: 'Asados o para degustar solo.',
+      highlights: 'Sedoso, terciario y persistente.',
+      details: '58 meses de envejecimiento. La máxima expresión de Villatuelda.'
+    }
+  ];
+
+  const handleWhatsApp = (wineName = null) => {
+    const message = wineName 
+      ? `Hola! Me interesa el vino *${wineName}*. ¿Tienen disponibilidad?`
+      : "Hola! Me gustaría recibir información sobre la selección de vinos de Viña Tuelda.";
+    // Abrir en nueva pestaña explícitamente
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+  };
+
+  const openPDF = () => {
+    window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  return (
+    <div className="min-h-screen bg-[#FDFCFB] text-stone-800 font-sans antialiased pb-12">
+      {/* Header Boutique */}
+      <header className="pt-16 pb-12 px-6 text-center">
+        <h1 className="text-3xl font-serif tracking-[0.5em] uppercase text-stone-900 mb-2">Viña Tuelda</h1>
+        <div className="flex items-center justify-center gap-1.5 text-stone-400 text-[10px] font-bold uppercase tracking-widest">
+          <MapPin size={10} />
+          <span>Villatuelda • Ribera del Duero</span>
+        </div>
+      </header>
+
+      {/* Lista de Vinos */}
+      <main className="max-w-md mx-auto px-6 space-y-4">
+        {wines.map((wine) => (
+          <div 
+            key={wine.id}
+            onClick={() => setSelectedWine(wine)}
+            className="group bg-white border border-stone-100 rounded-2xl p-5 flex items-center gap-5 active:scale-95 transition-all shadow-sm cursor-pointer hover:shadow-md"
+          >
+            <div className="w-14 h-28 bg-stone-50 rounded-xl flex flex-col items-center justify-start py-3 shrink-0 border border-stone-100 shadow-inner overflow-hidden">
+              <div style={{ backgroundColor: wine.capsule }} className="w-5 h-8 rounded-t-sm mb-1.5 shadow-sm"></div>
+              <div className="w-9 h-12 bg-white border border-stone-100 shadow-sm flex items-center justify-center">
+                <div className="text-[5px] font-serif opacity-30 leading-tight text-center uppercase font-bold tracking-tighter">Viña<br/>Tuelda</div>
+              </div>
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <span className="text-[9px] font-black uppercase tracking-widest text-amber-700 mb-1 block">{wine.label}</span>
+              <h3 className="text-xl font-serif text-stone-900 truncate leading-tight mb-2">{wine.name}</h3>
+              
+              <div className="flex flex-wrap gap-2">
+                <div className="flex items-center gap-1 px-2 py-0.5 bg-stone-50 rounded text-[10px] text-stone-500 border border-stone-100 font-medium">
+                  <Star size={10} className="text-amber-500" fill="currentColor" /> {wine.tag}
+                </div>
+              </div>
+            </div>
+            <ChevronRight size={18} className="text-stone-200" />
+          </div>
+        ))}
+
+        {/* Sección de Catálogo PDF */}
+        <div className="mt-12 p-8 bg-stone-100 rounded-[2rem] text-center border border-stone-200/50">
+          <FileText size={32} className="mx-auto text-stone-300 mb-4" />
+          <h4 className="text-sm font-serif text-stone-800 mb-2 uppercase tracking-widest">Ficha Técnica Completa</h4>
+          <p className="text-xs text-stone-500 leading-relaxed mb-6">
+            Consulta detalles sobre tipos de suelo, procesos de fermentación y analíticas profesionales.
+          </p>
+          <button 
+            onClick={openPDF}
+            className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-900 border-b-2 border-stone-900 pb-1 hover:text-amber-700 hover:border-amber-700 transition-all"
+          >
+            Abrir Documento Técnico <ExternalLink size={12} />
+          </button>
+        </div>
+
+        {/* Consulta Sommelier */}
+        <div className="pt-8 text-center">
+          <button 
+            onClick={() => handleWhatsApp()}
+            className="inline-flex items-center gap-2 text-stone-400 hover:text-stone-900 transition-colors group"
+          >
+            <MessageSquare size={16} className="group-hover:text-amber-600 transition-colors" />
+            <span className="text-[10px] font-bold uppercase tracking-widest">Consulta Directa Sommelier</span>
+          </button>
+        </div>
+      </main>
+
+      {/* Modal de Detalle */}
+      {selectedWine && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 animate-in fade-in duration-300">
+          <div className="absolute inset-0 bg-stone-900/40 backdrop-blur-md" onClick={() => setSelectedWine(null)}></div>
+          
+          <div className="relative bg-white w-full max-w-sm rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="p-8">
+              <div className="flex justify-between items-start mb-6">
+                <div 
+                  style={{ backgroundColor: selectedWine.capsule }} 
+                  className="w-12 h-12 rounded-full shadow-lg border-4 border-white"
+                ></div>
+                <button onClick={() => setSelectedWine(null)} className="p-2.5 bg-stone-50 rounded-full text-stone-300 hover:text-stone-900 transition-colors">
+                  <X size={20} />
+                </button>
+              </div>
+
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-700 block mb-1">
+                {selectedWine.label}
+              </span>
+              <h2 className="text-3xl font-serif text-stone-900 mb-4 leading-tight">{selectedWine.name}</h2>
+              
+              <div className="space-y-6">
+                <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100 shadow-inner">
+                  <p className="text-sm text-stone-700 leading-relaxed italic">
+                    "{selectedWine.highlights}"
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-4 bg-white border border-stone-100 rounded-2xl text-center">
+                    <Award size={14} className="mx-auto text-amber-500 mb-1" />
+                    <span className="block text-[8px] text-stone-400 uppercase font-bold tracking-tighter">Reconocimiento</span>
+                    <span className="text-[11px] font-bold text-stone-800">{selectedWine.awards}</span>
+                  </div>
+                  <div className="p-4 bg-white border border-stone-100 rounded-2xl text-center">
+                    <GlassWater size={14} className="mx-auto text-stone-300 mb-1" />
+                    <span className="block text-[8px] text-stone-400 uppercase font-bold tracking-tighter">Maduración</span>
+                    <span className="text-[11px] font-bold text-stone-800 leading-none">
+                      {selectedWine.details.split('.')[1] || selectedWine.details}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <Utensils size={12} /> Maridaje Sugerido
+                  </h4>
+                  <p className="text-stone-600 text-xs leading-relaxed">
+                    {selectedWine.pairing}
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-2 pt-2">
+                  <button 
+                    onClick={() => handleWhatsApp(selectedWine.name)}
+                    className="w-full bg-stone-900 text-white py-4.5 rounded-2xl font-bold uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 shadow-lg active:scale-95 transition-transform"
+                  >
+                    <Wine size={16} /> Consultar Disponibilidad
+                  </button>
+                  <button 
+                    onClick={openPDF}
+                    className="w-full bg-white text-stone-400 border border-stone-100 py-3 rounded-xl font-bold uppercase tracking-widest text-[9px] flex items-center justify-center gap-2 hover:bg-stone-50 transition-all"
+                  >
+                    <FileText size={12} /> Ver Ficha Técnica Completa
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
